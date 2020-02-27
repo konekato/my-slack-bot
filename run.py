@@ -5,5 +5,5 @@ def main():
     bot.run()
 
 if __name__ == "__main__":
-    print("slack-bot start")
+    print("my-slack-bot start")
     main()

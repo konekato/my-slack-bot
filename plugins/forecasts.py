@@ -13,27 +13,27 @@ def get_message_location():
 
     return message_location
 
-def get_messages_forcast_by_days():
-    messages_forcast = ['『今日』の情報はありませんでした。\n\n', '『明日』の情報はありませんでした。\n\n', '『明後日』の情報はありませんでした。\n\n']
+def get_messages_forecast_by_days():
+    messages_forecast = ['『今日』の情報はありませんでした。\n\n', '『明日』の情報はありませんでした。\n\n', '『明後日』の情報はありませんでした。\n\n']
     day_from_today = 0
     for r in response['forecasts']:
-        messages_forcast[day_from_today] = '『' + r['dateLabel'] + '(' + r['date'] + ')』\n'
-        messages_forcast[day_from_today] += '天気：' + r['telop'] + '\n'
-        messages_forcast[day_from_today] += '最低気温：'
+        messages_forecast[day_from_today] = '『' + r['dateLabel'] + '(' + r['date'] + ')』\n'
+        messages_forecast[day_from_today] += '天気：' + r['telop'] + '\n'
+        messages_forecast[day_from_today] += '最低気温：'
         if r['temperature']['min']:
-            messages_forcast[day_from_today] += r['temperature']['min']['celsius']
+            messages_forecast[day_from_today] += r['temperature']['min']['celsius']
         else:
-            messages_forcast[day_from_today] += '情報無し'
-        messages_forcast[day_from_today] += '　最高気温：'
+            messages_forecast[day_from_today] += '情報無し'
+        messages_forecast[day_from_today] += '　最高気温：'
         if r['temperature']['max']:
-            messages_forcast[day_from_today] += r['temperature']['max']['celsius']
+            messages_forecast[day_from_today] += r['temperature']['max']['celsius']
         else:
-            messages_forcast[day_from_today] += '情報無し'
-        messages_forcast[day_from_today] += '\n'
-        messages_forcast[day_from_today] += '\n'
+            messages_forecast[day_from_today] += '情報無し'
+        messages_forecast[day_from_today] += '\n'
+        messages_forecast[day_from_today] += '\n'
         day_from_today += 1
     
-    return messages_forcast
+    return messages_forecast
 
 def get_message_description():
     message_description = '『詳細』\n'
@@ -42,47 +42,47 @@ def get_message_description():
 
     return message_description
 
-def fetch_message_forcast_of(day):
+def fetch_message_forecast_of(day):
     message = ''
-    messages_forcasts = get_messages_forcast_by_days()
+    messages_forecasts = get_messages_forecast_by_days()
 
     if day == '今日':
-        message += messages_forcasts[0]
+        message += messages_forecasts[0]
     elif day == '明日':
-        message += messages_forcasts[1]
+        message += messages_forecasts[1]
     elif day == '明後日':
-        message += messages_forcasts[2]
+        message += messages_forecasts[2]
     return message
 
-def fetch_message_forcast_description():
+def fetch_message_forecast_description():
     message = get_message_description()
     return message
 
-def fetch_message_forcast_all():
+def fetch_message_forecast_all():
     message = get_message_location()
-    messages_forcasts = get_messages_forcast_by_days()
+    messages_forecasts = get_messages_forecast_by_days()
 
-    for forcasts in messages_forcasts:
-        message += forcasts
+    for forecasts in messages_forecasts:
+        message += forecasts
     message += get_message_description()
     return message
 
 @listen_to('今日')
 def forecast_today(message):
-    message.send(fetch_message_forcast_of('今日'))
+    message.send(fetch_message_forecast_of('今日'))
 
 @listen_to('明日')
 def forecast_tomorrow(message):
-    message.send(fetch_message_forcast_of('明日'))
+    message.send(fetch_message_forecast_of('明日'))
     
 @listen_to('明後日')
 def forecast_day_after_tomorrow(message):
-    message.send(fetch_message_forcast_of('明後日'))
+    message.send(fetch_message_forecast_of('明後日'))
 
 @listen_to('詳細')
 def forecast_description(message):
-    message.send(fetch_message_forcast_description())
+    message.send(fetch_message_forecast_description())
 
 @listen_to('予報')
 def forecast_all(message):
-    message.send(fetch_message_forcast_all())
+    message.send(fetch_message_forecast_all())
