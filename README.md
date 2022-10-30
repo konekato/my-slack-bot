@@ -1,3 +1,8 @@
+**※2021年11月31日以降に作成されたSlackアプリでは動作できなくなりました。**
+
+https://api.slack.com/changelog/2021-10-rtm-start-to-stop
+> Beginning November 30, 2021, newly created Slack apps will no longer be able to make API calls to rtm.start.
+
 # my slack bot
 ## 機能
 - 天気予報
